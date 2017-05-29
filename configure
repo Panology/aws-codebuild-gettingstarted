@@ -1,0 +1,28 @@
+#!/bin/bash
+# configure
+# Script to configure the environment
+#
+PS3="Which AWS Region would you like to use? "
+options=("N. Virginia" "Ohio" "N. California" "Oregon")
+select opt in "${options[@]}"; do
+  case $opt in
+    "N. Virginia")
+      REGION="us-east-1";
+      break;;
+    "Ohio")
+      REGION="us-east-2";
+      break;;
+    "N. California")
+      REGION="us-west-1";
+      break;;
+    "Oregon")
+      REGION="us-west-2";
+      break;;
+    *)
+      echo "Invalid option."
+      ;;
+  esac
+done
+[ -n "${REGION}" ] && echo ${REGION} > config
+#
+# End

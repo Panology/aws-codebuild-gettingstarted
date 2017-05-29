@@ -6,14 +6,26 @@ THIS_FILE := $(lastword $(MAKEFILE_LIST))
 RM := /bin/rm
 MVN = /usr/bin/mvn
 ZIP := /usr/bin/zip
+CAT := $(if $(filter $(OS),Windows_NT), type, cat)
+AWS := /usr/local/bin/aws
 
 # Directories
 DIST := dist
 
 # Files
-STATEFILES := build
+STATEFILES := build upload
 BUILDPKG := MessageUtil.zip
 SRCFILES := buildspec.yml pom.xml src/
+CBINPUT := codebuild/input
+
+# AWS Configs
+REGION := $(shell $(CAT) config 2>/dev/null)
+AWSOPTS := --region $(REGION)
+BUCKET := ourpts-common-ohio-454844014023
+
+# Make sure we have been configured first
+config:
+	$(error You must run ./configure first.)
 
 # These are our phony targets
 .PHONY: clean test
@@ -42,3 +54,11 @@ endif
 # Target to test the code
 test: clean
 	$(MVN) test
+
+# Target to upload the input package to S3
+upload: config $(DIST)/$(BUILDPKG)
+	$(AWS) $(AWSOPTS) s3 cp $(DIST)/$(BUILDPKG) s3://$(BUCKET)/$(CBINPUT)/
+	@touch upload
+
+#
+# End

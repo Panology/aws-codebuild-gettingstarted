@@ -14,7 +14,8 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - mv target output
+      - ls -l output/*.jar
 artifacts:
-  base-directory: 'target'
   files:
-    - messageUtil-1.0.jar
+    - output/messageUtil-0.1.jar
