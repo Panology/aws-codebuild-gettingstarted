@@ -4,6 +4,7 @@ THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
 # Tools
 RM := /bin/rm
+MVN = /usr/bin/mvn
 ZIP := /usr/bin/zip
 
 # Directories
@@ -24,6 +25,7 @@ SRCFILES := buildspec.yml pom.xml src/
 clean:
 	$(RM) -rf $(DIST)
 	$(RM) -f $(STATEFILES)
+	$(MVN) clean
 
 # Target to build our package(s)
 build: $(DIST)/$(BUILDPKG)
