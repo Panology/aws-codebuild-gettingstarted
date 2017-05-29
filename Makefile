@@ -16,7 +16,7 @@ BUILDPKG := MessageUtil.zip
 SRCFILES := buildspec.yml pom.xml src/
 
 # These are our phony targets
-.PHONY: clean
+.PHONY: clean test
 
 # Our default target
 .DEFAULT_GOAL := build
@@ -38,3 +38,7 @@ ifeq ($(filter clean,$(MAKECMDGOALS)),)
 endif
 	mkdir $(DIST)
 	$(ZIP) -r $(DIST)/$(BUILDPKG) $(SRCFILES)
+
+# Target to test the code
+test: clean
+	$(MVN) test
