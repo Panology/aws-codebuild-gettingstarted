@@ -1,0 +1,9 @@
+# Local configuration
+config
+# Maven build directory
+target/
+# Package staging directory
+dist/
+# State Files
+build
+upload
